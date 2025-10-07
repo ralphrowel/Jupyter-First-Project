@@ -15,16 +15,13 @@ for div in soup.find_all("div", class_="content-cell"):
 
         text = div.get_text(" ", strip=True)
 
-        # Find full date string at the end
         match = re.search(r"[A-Za-z]{3} \d{1,2}, \d{4}, \d{1,2}:\d{2}:\d{2}\s?[AP]M PST", text)
         date_str = match.group(0) if match else None
 
-        # Remove "Watched " and the date from the text to isolate channel
         cleaned = text.replace("Watched ", "")
         if date_str:
             cleaned = cleaned.replace(date_str, "").strip()
 
-        # Whatever is left after title = channel
         channel = cleaned.replace(title, "").strip()
 
         entries.append({
